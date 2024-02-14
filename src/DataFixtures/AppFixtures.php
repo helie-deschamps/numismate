@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,8 +11,14 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        // Creation of basic admin
+        $manager->persist(
+            (new User())
+                ->setEmail('admin@admin.admin')
+                ->setRoles(['ROLE_ADMIN'])
+                ->setPassword('$2y$13$mm23QXQzXbNnVXgyFyFDoOJQF2.0tQHy.NbLHwQl248Kck0Gacm6G')
+                // Unhashed password: adminadmin
+        );
 
         // Creation of basic categories
         $manager->persist(

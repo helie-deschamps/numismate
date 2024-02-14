@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/coin')]
+#[Route('/admin/coin')]
 class CoinController extends AbstractController
 {
     #[Route('/', name: 'app_coin_index', methods: ['GET'])]
