@@ -15012,8 +15012,6 @@ dl {
             height: 35px;
             border-radius: 100%;
             border: solid 2px #c0bfcf; }
-        .sidebar .nav .nav-item.nav-profile .nav-link .nav-profile-text {
-          margin-left: 1rem; }
           .rtl .sidebar .nav .nav-item.nav-profile .nav-link .nav-profile-text {
             margin-left: auto;
             margin-right: 1rem; }
@@ -15074,9 +15072,6 @@ dl {
             .rtl .sidebar .nav.sub-menu .nav-item .nav-link:before {
               left: auto;
               right: 0; }
-          .sidebar .nav.sub-menu .nav-item .nav-link.active {
-            color: #3f50f6;
-            background: transparent; }
           .sidebar .nav.sub-menu .nav-item .nav-link:hover {
             color: #15191e; }
         .sidebar .nav.sub-menu .nav-item:hover {
