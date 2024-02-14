@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coin index{% endblock %}
+
+{% block body %}
+    <h1>Coin index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Photograph_asset_path</th>
+                <th>Creation_date</th>
+                <th>Bdd_add_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coin in coins %}
+            <tr>
+                <td>{{ coin.id }}</td>
+                <td>{{ coin.name }}</td>
+                <td>{{ coin.description }}</td>
+                <td>{{ coin.photographAssetPath }}</td>
+                <td>{{ coin.creationDate ? coin.creationDate|date('Y-m-d') : '' }}</td>
+                <td>{{ coin.bddAddDate ? coin.bddAddDate|date('Y-m-d H:i:s T') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_coin_show', {'id': coin.id}) }}">show</a>
+                    <a href="{{ path('app_coin_edit', {'id': coin.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_coin_new') }}">Create new</a>
+{% endblock %}

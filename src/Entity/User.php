@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -29,6 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\ManyToMany(targetEntity: Coin::class, mappedBy: 'users_owners')]
+    private Collection $coins_owned;
+
+    public function __construct()
+    {
+        $this->coins_owned = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -98,5 +108,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Coin>
+     */
+    public function getCoinsOwned(): Collection
+    {
+        return $this->coins_owned;
+    }
+
+    public function addCoinsOwned(Coin $coinsOwned): static
+    {
+        if (!$this->coins_owned->contains($coinsOwned)) {
+            $this->coins_owned->add($coinsOwned);
+            $coinsOwned->addUsersOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoinsOwned(Coin $coinsOwned): static
+    {
+        if ($this->coins_owned->removeElement($coinsOwned)) {
+            $coinsOwned->removeUsersOwner($this);
+        }
+
+        return $this;
     }
 }
