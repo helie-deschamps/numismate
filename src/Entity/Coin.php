@@ -38,11 +38,15 @@ class Coin
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'coins_owned')]
     private Collection $users_owners;
 
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'coin', orphanRemoval: true)]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->bdd_add_date = new DateTimeImmutable();
         $this->categories = new ArrayCollection();
         $this->users_owners = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +158,36 @@ class Coin
     public function removeUsersOwner(User $usersOwner): static
     {
         $this->users_owners->removeElement($usersOwner);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReviews(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setCoin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getCoin() === $this) {
+                $review->setCoin(null);
+            }
+        }
 
         return $this;
     }
