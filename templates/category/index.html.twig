@@ -1,37 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}Catégories de piéces{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>{{ category.description }}</td>
-                <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_category_new') }}">Create new</a>
+    {% include '/_includes/admin_panel/cards/list.html.twig' with {
+        'name': "category",
+        'listTitle': "categories",
+        'listElementsTitles': ['id', 'name', 'description'],
+        'listElementsTitlesToDisplay': ['ID', 'Nom', 'Description'],
+        'listArrey': categories,
+        }
+    %}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier les catégories</h4>
+                <a  class="btn btn-primary btn-icon-text" href="{{ path('app_category_new') }}">
+                    <i class="mdi mdi-database-plus btn-icon-prepend"></i>
+                    En ajouter une
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

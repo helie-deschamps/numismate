@@ -11,14 +11,17 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // Creation of basic admin
-        $manager->persist(
-            (new User())
-                ->setEmail('admin@admin.admin')
-                ->setRoles(['ROLE_ADMIN'])
-                ->setPassword('$2y$13$mm23QXQzXbNnVXgyFyFDoOJQF2.0tQHy.NbLHwQl248Kck0Gacm6G')
-                // Unhashed password: adminadmin
-        );
+        // Creation of basic admin in dev environment
+        // mail: admin@admin.admin
+        // Unhashed password: adminadmin
+        if (strcmp($_SERVER['APP_ENV'], 'dev') == 0) {
+            $manager->persist(
+                (new User())
+                    ->setEmail('admin@admin.admin')
+                    ->setRoles(['ROLE_ADMIN'])
+                    ->setPassword('$2y$13$mm23QXQzXbNnVXgyFyFDoOJQF2.0tQHy.NbLHwQl248Kck0Gacm6G')
+            );
+        }
 
         // Creation of basic categories
         $manager->persist(

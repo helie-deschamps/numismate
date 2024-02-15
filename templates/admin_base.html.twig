@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Breeze Admin</title>
+    <title>{% block title %}Administrateur{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset("admin_panel/vendors/mdi/css/materialdesignicons.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("admin_panel/vendors/flag-icon-css/css/flag-icon.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("admin_panel/vendors/css/vendor.bundle.base.css") }}" />
@@ -15,13 +15,26 @@
 </head>
 <body>
 <div class="container-scroller">
-    {{ include('_includes/sidebar.html.twig') }}
+    {{ include('/_includes/admin_panel/sidebar.html.twig') }}
     <div class="container-fluid page-body-wrapper">
-        {{ include('_includes/settings_panel.html.twig') }}
-        {{ include('_includes/navbar.html.twig') }}
+        {{ include('/_includes/admin_panel/settings_panel.html.twig') }}
+        {{ include('/_includes/admin_panel/navbar.html.twig') }}
         <div class="main-panel">
-            {% block body %}<h3 class="mb-0"> Hi, welcome back! <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Une erreur est survenue.</span>{% endblock %}
-            {{ include("_includes/footer.html.twig") }}
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="mb-0">Bonjour {{ app.user.email }} !</h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"> Basic tables </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row">
+                {% block body %}<span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Une erreur est survenue.</span>{% endblock %}
+                </div>
+            </div>
+            {{ include("/_includes/admin_panel/footer.html.twig") }}
         </div>
         <!-- main-panel ends -->
     </div>

@@ -1,41 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
-{% block title %}Review index{% endblock %}
+{% block title %}Catégories de piéces{% endblock %}
 
 {% block body %}
-    <h1>Review index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Publication_date</th>
-                <th>Score</th>
-                <th>Content</th>
-                <th>Moderation_accepted</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for review in reviews %}
-            <tr>
-                <td>{{ review.id }}</td>
-                <td>{{ review.publicationDate ? review.publicationDate|date('Y-m-d H:i:s T') : '' }}</td>
-                <td>{{ review.score }}</td>
-                <td>{{ review.content }}</td>
-                <td>{{ review.moderationAccepted ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_review_show', {'id': review.id}) }}">show</a>
-                    <a href="{{ path('app_review_edit', {'id': review.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_review_new') }}">Create new</a>
+    {% include '/_includes/admin_panel/cards/list.html.twig' with {
+        'name': "review",
+        'listTitle': "Commentaires",
+        'listElementsTitles': ['id', 'publicationDate', 'score', 'content', 'moderationAccepted'],
+        'listElementsTitlesToDisplay': ['ID', 'Date de publication', 'Note sur 5', 'Contenu', 'Accepté par la modération'],
+        'listArrey': reviews,
+    }
+    %}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier les catégories</h4>
+                <a  class="btn btn-primary btn-icon-text" href="{{ path('app_review_new') }}">
+                    <i class="mdi mdi-database-plus btn-icon-prepend"></i>
+                    En ajouter une
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

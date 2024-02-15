@@ -1,0 +1,56 @@
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ listTitle }}</h4>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        {% for elementTitleToDisplay in listElementsTitlesToDisplay %}
+                            <th>{{ elementTitleToDisplay }}</th>
+                        {% endfor %}
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for lineEllement in listArrey %}
+                        <tr>
+                            {% for elementsTitles in listElementsTitles %}
+                                <td class="py-1">
+                                    {% if attribute(lineEllement, elementsTitles).timestamp is defined %}
+                                        {{ attribute(lineEllement, elementsTitles)|date('d/m/Y') }}
+                                    {% elseif elementsTitles == 'score' %}
+                                        {% for i in 0..4 %}
+                                            {% if i < attribute(lineEllement, elementsTitles) %}
+                                                <i class="mdi mdi-star"></i>
+                                            {% else %}
+                                                <i class=" mdi mdi-star-outline"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% elseif attribute(lineEllement, elementsTitles) in [0,1] %}
+                                        {% if attribute(lineEllement, elementsTitles) %}
+                                            <i class="mdi mdi-checkbox-marked-outline"></i>
+                                        {% else %}
+                                            <i class="mdi mdi-checkbox-blank-outline"></i>
+                                        {% endif %}
+                                    {% elseif attribute(lineEllement, elementsTitles) is iterable %}
+                                        {% for arreyEllemnt in attribute(lineEllement, elementsTitles) %}
+                                            <span>{{ arreyEllemnt }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ attribute(lineEllement, elementsTitles) }}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                            <td>
+                                <a class="btn btn-warning btn-icon-text" href="{{ path('app_' ~ name ~ '_show', {'id': lineEllement.id}) }}">Voir</a>
+                                <a class="btn btn-danger btn-icon-text" href="{{ path('app_' ~ name ~ '_edit', {'id': lineEllement.id}) }}">Modifier</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

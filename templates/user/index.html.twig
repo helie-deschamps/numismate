@@ -1,39 +1,25 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin_base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Catégories de piéces{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    {% include '/_includes/admin_panel/cards/list.html.twig' with {
+        'name': "user",
+        'listTitle': "Utilisateurs",
+        'listElementsTitles': ['id', 'email', 'roles'],
+        'listElementsTitlesToDisplay': ['ID', 'E-mail', 'Roles'],
+        'listArrey': users,
+    }
+    %}
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Modifier les catégories</h4>
+                <a  class="btn btn-primary btn-icon-text" href="{{ path('app_user_new') }}">
+                    <i class="mdi mdi-database-plus btn-icon-prepend"></i>
+                    En ajouter une
+                </a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
