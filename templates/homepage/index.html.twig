@@ -28,17 +28,19 @@
     {% else %}
         <b>Vous ne possédez aucune pièces</b>
     {% endif %}
-    <p>Voici la liste de toutes les pièces existantes :</p>
+    <p>Voici la liste de toutes les pièces existantes, triées par nom :</p>
     {% if coins_count > 0 %}
         <table>
             <tr>
                 <th>Nom</th>
                 <th>Description</th>
+                <th></th>
             </tr>
         {% for coin in coins %}
             <tr>
                 <td>{{ coin.name }}</td>
                 <td>{{ coin.description }}</td>
+                <td><a href="?type=coin_geted&id={{ coin.id }}">je le posséde !</a></td>
             </tr>
         {% endfor %}
         </table>
