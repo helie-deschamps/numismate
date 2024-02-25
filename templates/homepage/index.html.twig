@@ -9,12 +9,41 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Bonjour {{ user.email }} !</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/Projects/numismate/src/Controller/HomepageController.php</code></li>
-        <li>Your template at <code>D:/Projects/numismate/templates/homepage/index.html.twig</code></li>
-    </ul>
+    <p>Voici la liste des pièces que vous possédez :</p>
+    {% if user_coins_count > 0 %}
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+            </tr>
+            {% for coin in user.getCoinsOwned() %}
+                <tr>
+                    <td>{{ coin.name }}</td>
+                    <td>{{ coin.description }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <b>Vous ne possédez aucune pièces</b>
+    {% endif %}
+    <p>Voici la liste de toutes les pièces existantes :</p>
+    {% if coins_count > 0 %}
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+            </tr>
+        {% for coin in coins %}
+            <tr>
+                <td>{{ coin.name }}</td>
+                <td>{{ coin.description }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <b>Il n'existe pas encore de pièces</b>
+    {% endif %}
 </div>
 {% endblock %}
